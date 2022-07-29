@@ -1,5 +1,5 @@
 
-# Packman
+# Packman Old (unfiinished)
 Game made in html/css/vanilla js without canvas.
 
 ## Screenshots
