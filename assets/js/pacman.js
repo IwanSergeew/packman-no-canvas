@@ -18,9 +18,14 @@ class Pacman {
 
     moveEl = (dir) => {
         if(this.direction == dir) return;
-        const [ rows, cols ] = getGridTemplate(qs('.game'));
+        const currentBox = this.space;
+        const game = qs('.game');
+        const index = Array.from(game.children).indexOf(currentBox);
+        if(index < 0) return;
+        const [ rows, cols ] = getGridTemplate(game);
         switch(dir) {
             case DIR.UP: {
+                // if(this.children[index].classList.contains('space'))
                 this.targetBox = 0;
                 break;
             }

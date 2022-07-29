@@ -51,7 +51,12 @@ class Game {
 
     addPackman = () => {
         const spaces = qsa('.space:empty', this.el);
-        spaces[getRandomNumber(0, spaces.length-1)].append(this.pacman.el);
+        this.pacman.space = spaces[getRandomNumber(0, spaces.length-1)];
+        this.pacman.space.setAttribute('data-packman', '');
+        const rect = this.pacman.space.getBoundingClientRect();
+        this.el.append(this.pacman.el);
+        this.pacman.el.style.top = `${rect.top}px`;
+        this.pacman.el.style.left = `${rect.left}px`;
     }
 
     addGhosts = () => {
