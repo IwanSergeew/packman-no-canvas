@@ -25,6 +25,11 @@ class Game {
         window.addEventListener('resize', this.updateGameSize);
         window.addEventListener('keydown', this.onKeyPress);
     }
+
+    eatDot = (space) => {
+        const dot = space.querySelector('.dot');
+        if(dot) dot.remove();
+    }
     
     onKeyPress = (e) => {
         this.pacman.moveEl(directions[e.code]);
@@ -50,6 +55,7 @@ class Game {
     }
 
     addPackman = () => {
+        this.pacman.game = this;
         const spaces = qsa('.space:empty', this.el);
         this.pacman.space = spaces[getRandomNumber(0, spaces.length-1)];
         this.pacman.space.setAttribute('data-packman', '');
@@ -62,8 +68,15 @@ class Game {
     addGhosts = () => {
         let spaces;
         for(let i = 0; i < this.ghosts.length; i++) {
+            this.ghosts[i].game = this;
             spaces = qsa('.space:empty', this.el);
-            spaces[getRandomNumber(0, spaces.length-1)].append(this.ghosts[i].el);
+            this.ghosts[i].space = spaces[getRandomNumber(0, spaces.length-1)];
+            this.ghosts[i].space.setAttribute('data-ghost', `${i}`);
+            const rect = this.pacman.space.getBoundingClientRect();
+            this.el.append(this.ghosts[i].el);
+            this.ghosts[i].el.style.top = `${rect.top}px`;
+            this.ghosts[i].el.style.left = `${rect.left}px`;
+            this.ghosts[i].startMoving();
         }
     }
 

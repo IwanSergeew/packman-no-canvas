@@ -15,6 +15,10 @@
     --green: green;
     --blue: blue;
     --purple: purple;
+    --orange: orange;
+
+    --map-cols: 19;
+    --map-rows: 22;
 }
 
 body {
@@ -30,8 +34,8 @@ body {
     aspect-ratio: 1;
     display: grid;
     place-items: center;
-    grid-template-columns: repeat(19, 1fr);
-    grid-template-rows: repeat(22, 1fr);
+    grid-template-columns: repeat(var(--map-cols), 1fr);
+    grid-template-rows: repeat(var(--map-rows), 1fr);
     background-color: var(--background);
 }
 .game > * {
@@ -53,17 +57,36 @@ body {
 }
 
 .game .pacman {
-    width: calc(100% / 19);
-    height: calc(100% / 22);
+    width: calc(100vmin / var(--map-cols));
+    height: calc(100vmin / var(--map-rows));
     border-radius: 50%;
     background: var(--pacman);
     position: absolute;
-    overflow: hidden;
-    transition: all 500ms linear;
+    transition: left 500ms linear, top 500ms linear;
 }
-.game .space .pacman.moving {
-    
+.game .pacman.moving .pacman_mouth {
+    animation-name: pacmanMoving;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
 }
+
+@keyframes pacmanMoving {
+    0% {
+      clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    }
+    25% {
+      clip-path: polygon(100% 60%, 44% 48%, 100% 40%);
+    }
+    50% {
+      clip-path: polygon(100% 50%, 44% 48%, 100% 50%);
+    }
+    75% {
+      clip-path: polygon(100% 59%, 44% 48%, 100% 35%);
+    }
+    100% {
+      clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    }
+  }
 
 .game .pacman.left {
     transform: scaleX(-1);
@@ -89,14 +112,13 @@ body {
 }
 
 .game .ghost {
-    width: 100%;
-    height: 100%;
+    width: calc(100vmin / var(--map-cols));
+    height: calc(100vmin / var(--map-rows));
     border-radius: 50%;
-    position: relative;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+.game .ghost.moving {
+    transition: left 500ms linear, top 500ms linear;
 }
 .game .ghost.red {
     background: var(--red);
@@ -109,4 +131,7 @@ body {
 }
 .game .ghost.purple {
     background: var(--purple);
+}
+.game .ghost.orange {
+    background: var(--orange);
 }

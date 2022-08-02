@@ -16,6 +16,9 @@ const ghosts = [
     }),
     new Ghost({
         color: 'purple'
+    }),
+    new Ghost({
+        color: 'orange'
     })
 ];
 const map = new Map();
